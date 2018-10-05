@@ -3,52 +3,51 @@
  */
 package smallsql.tools;
 
-import java.io.*;
+import smallsql.database.SSDriver;
+
+import javax.swing.*;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.sql.*;
 import java.util.Properties;
-
-import javax.swing.JOptionPane;
-
-import smallsql.database.*;
-
 
 /**
  * @author Volker Berlin
  */
 public class CommandLine {
 
-
     public static void main(String[] args) throws Exception {
         System.out.println("SmallSQL Database command line tool\n");
-        Connection con = new SSDriver().connect("jdbc:smallsql", new Properties());
+        Connection con = new SSDriver().connect("jdbc:smallsql:db1?create=true", new Properties());
         Statement st = con.createStatement();
-        if(args.length>0){
+        if (args.length > 0) {
             con.setCatalog(args[0]);
         }
-        System.out.println("\tVersion: "+con.getMetaData().getDatabaseProductVersion());
-        System.out.println("\tCurrent database: "+con.getCatalog());
+        System.out.println("\tVersion: " + con.getMetaData().getDatabaseProductVersion());
+        System.out.println("\tCurrent database: " + con.getCatalog());
         System.out.println();
         System.out.println("\tUse the USE command to change the database context.");
         System.out.println("\tType 2 times ENTER to execute any SQL command.");
-        
+
         StringBuffer command = new StringBuffer();
         BufferedReader input = new BufferedReader(new InputStreamReader(System.in));
-        while(true){
+        while (true) {
             try {
                 String line;
-                try{
+                try {
                     line = input.readLine();
-                }catch(IOException ex){
+                } catch (IOException ex) {
                     ex.printStackTrace();
-                    JOptionPane.showMessageDialog( null, "You need to start the command line of the \nSmallSQL Database with a console window:\n\n       java -jar smallsql.jar\n\n" + ex, "Fatal Error", JOptionPane.OK_OPTION);
+                    JOptionPane.showMessageDialog(null, "You need to start the command line of the \nSmallSQL Database with a console window:\n\n       java -jar smallsql.jar\n\n" + ex, "Fatal Error", JOptionPane.OK_OPTION);
                     return;
                 }
-                if(line == null){
+                if (line == null) {
                     return; //end of program
                 }
-                if(line.length() == 0 && command.length() > 0){
+                if (line.length() == 0 && command.length() > 0) {
                     boolean isRS = st.execute(command.toString());
-                    if(isRS){
+                    if (isRS) {
                         printRS(st.getResultSet());
                     }
                     command.setLength(0);
@@ -59,20 +58,20 @@ public class CommandLine {
                 e.printStackTrace();
             }
         }
-        
+
     }
-    
+
 
     private static void printRS(ResultSet rs) throws SQLException {
         ResultSetMetaData md = rs.getMetaData();
         int count = md.getColumnCount();
-        for(int i=1; i<=count; i++){
+        for (int i = 1; i <= count; i++) {
             System.out.print(md.getColumnLabel(i));
             System.out.print('\t');
         }
         System.out.println();
-        while(rs.next()){
-            for(int i=1; i<=count; i++){
+        while (rs.next()) {
+            for (int i = 1; i <= count; i++) {
                 System.out.print(rs.getObject(i));
                 System.out.print('\t');
             }

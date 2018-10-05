@@ -53,3 +53,6 @@ Temporary Items
 .settings
 .classpath
 .project
+
+# DB file
+db1
