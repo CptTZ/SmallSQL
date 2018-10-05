@@ -38,7 +38,7 @@ import java.nio.ByteBuffer;
 import java.nio.channels.FileChannel;
 import java.sql.DriverManager;
 import java.sql.SQLException;
-import smallsql.database.language.Language;
+import smallsql.tools.language.Language;
 
 
 final class IndexDescription {

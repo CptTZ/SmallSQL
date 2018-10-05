@@ -33,7 +33,7 @@
 package smallsql.database;
 
 import java.sql.*;
-import smallsql.database.language.Language;
+import smallsql.tools.language.Language;
 
 /**
  * This class is used to save the row positions (RowID) list for a not unique index.

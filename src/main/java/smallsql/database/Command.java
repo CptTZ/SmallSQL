@@ -34,7 +34,7 @@ package smallsql.database;
 
 import java.sql.*;
 
-import smallsql.database.language.Language;
+import smallsql.tools.language.Language;
 
 
 abstract class Command {

@@ -36,7 +36,7 @@ import java.io.*;
 import java.nio.channels.FileChannel;
 import java.sql.*;
 
-import smallsql.database.language.Language;
+import smallsql.tools.language.Language;
 
 
 class Column implements Cloneable{

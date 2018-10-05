@@ -30,7 +30,7 @@
  * Author: Volker Berlin
  * Author: Saverio Miroddi 
  */
-package smallsql.database.language;
+package smallsql.tools.language;
 
 import java.util.HashMap;
 import java.util.HashSet;

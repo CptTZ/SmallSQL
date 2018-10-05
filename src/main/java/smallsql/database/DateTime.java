@@ -37,7 +37,7 @@ import java.sql.*;
 import java.text.DateFormatSymbols;
 import java.util.Calendar;
 import java.util.TimeZone;
-import smallsql.database.language.Language;
+import smallsql.tools.language.Language;
 
 public final class DateTime implements Mutable{
 	

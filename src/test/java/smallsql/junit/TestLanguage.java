@@ -32,7 +32,7 @@
  */
 package smallsql.junit;
 
-import smallsql.database.language.Language;
+import smallsql.tools.language.Language;
 
 import java.sql.Connection;
 import java.sql.SQLException;

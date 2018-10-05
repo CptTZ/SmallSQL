@@ -34,7 +34,7 @@ package smallsql.database;
 
 import java.math.BigDecimal;
 import java.sql.*;
-import smallsql.database.language.Language;
+import smallsql.tools.language.Language;
 
 public class ExpressionValue extends Expression {
 

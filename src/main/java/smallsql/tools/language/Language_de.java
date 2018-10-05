@@ -30,7 +30,7 @@
  * Author: Volker Berlin
  * 
  */
-package smallsql.database.language;
+package smallsql.tools.language;
 
 /**
  * Extended localization class for German language.

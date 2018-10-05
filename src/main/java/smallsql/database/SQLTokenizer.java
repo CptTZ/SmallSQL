@@ -36,7 +36,7 @@ import java.util.*;
 import java.sql.SQLException;
 import java.sql.Types;
 
-import smallsql.database.language.Language;
+import smallsql.tools.language.Language;
 
 public class SQLTokenizer {
 	private static final int NOT_COMMENT = 0;

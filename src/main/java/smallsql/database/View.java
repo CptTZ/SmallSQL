@@ -37,7 +37,7 @@ import java.io.*;
 import java.nio.ByteBuffer;
 import java.nio.channels.FileChannel;
 
-import smallsql.database.language.Language;
+import smallsql.tools.language.Language;
 
 /**
  * @author Volker Berlin

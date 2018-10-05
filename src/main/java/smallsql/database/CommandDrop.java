@@ -33,7 +33,7 @@
 package smallsql.database;
 
 import java.io.*;
-import smallsql.database.language.Language;
+import smallsql.tools.language.Language;
 
 public class CommandDrop extends Command {
 

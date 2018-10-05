@@ -38,7 +38,7 @@ import java.io.RandomAccessFile;
 import java.nio.channels.FileChannel;
 import java.nio.channels.FileLock;
 import java.sql.SQLException;
-import smallsql.database.language.Language;
+import smallsql.tools.language.Language;
 
 class Utils {
 

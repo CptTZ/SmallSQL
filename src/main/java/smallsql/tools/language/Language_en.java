@@ -30,7 +30,7 @@
  * Author: Saverio Miroddi
  * 
  */
-package smallsql.database.language;
+package smallsql.tools.language;
 
 /**
  * Extended localization class for english language.

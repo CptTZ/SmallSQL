@@ -38,7 +38,7 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.text.MessageFormat;
 
-import smallsql.database.language.Language;
+import smallsql.tools.language.Language;
 
 /**
  * @author Volker Berlin

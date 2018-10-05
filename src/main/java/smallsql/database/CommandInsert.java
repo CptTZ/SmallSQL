@@ -34,7 +34,7 @@ package smallsql.database;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
-import smallsql.database.language.Language;
+import smallsql.tools.language.Language;
 
 
 public class CommandInsert extends Command {

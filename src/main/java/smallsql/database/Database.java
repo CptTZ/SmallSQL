@@ -36,7 +36,7 @@ import java.util.*;
 import java.io.*;
 import java.nio.channels.FileChannel;
 import java.sql.*;
-import smallsql.database.language.Language;
+import smallsql.tools.language.Language;
 
 /**
  * There are only one instance of this class per database. It will be share between all connections to this database and

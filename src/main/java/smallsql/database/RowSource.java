@@ -33,7 +33,7 @@
 package smallsql.database;
 
 import java.sql.*;
-import smallsql.database.language.Language;
+import smallsql.tools.language.Language;
 
 /**
  * This is the navigation through the rows of any source.

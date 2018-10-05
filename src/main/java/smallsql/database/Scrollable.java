@@ -33,7 +33,7 @@
  */
 package smallsql.database;
 
-import smallsql.database.language.Language;
+import smallsql.tools.language.Language;
 
 /**
  * Scrollable is a RowSource wrapper to add the feature of scrollable to any RowSource.

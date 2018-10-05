@@ -32,7 +32,7 @@
  */
 package smallsql.database;
 
-import smallsql.database.language.Language;
+import smallsql.tools.language.Language;
 
 /**
  * Is used to implements the ORDER BY clause.

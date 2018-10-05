@@ -34,7 +34,7 @@ package smallsql.database;
 
 import java.util.List;
 import java.sql.*;
-import smallsql.database.language.Language;
+import smallsql.tools.language.Language;
 
 final class SQLParser {
 

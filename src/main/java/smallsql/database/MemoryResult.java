@@ -35,7 +35,7 @@ package smallsql.database;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
-import smallsql.database.language.Language;
+import smallsql.tools.language.Language;
 
 /**
  * @author Volker Berlin
