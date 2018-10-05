@@ -64,8 +64,8 @@ final class SSDatabaseMetaData implements DatabaseMetaData {
     public String getURL() throws SQLException {
         Database database = con.getDatabase(true);
         if (database == null)
-            return SSDriver.URL_PREFIX;
-        return SSDriver.URL_PREFIX + ':' + database.getName();
+            return smallsql.tools.config.URL_PREFIX;
+        return smallsql.tools.config.URL_PREFIX + ':' + database.getName();
     }
 
 

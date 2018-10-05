@@ -6,7 +6,7 @@
 
     <groupId>de.smallsql</groupId>
     <artifactId>SmallSQL</artifactId>
-    <version>0.21</version>
+    <version>0.22</version>
     <packaging>jar</packaging>
     <name>SmallSQL DBMS</name>
 
@@ -73,10 +73,12 @@
                 <artifactId>maven-jar-plugin</artifactId>
                 <version>3.1.0</version>
                 <configuration>
+                    <finalName>SmallSQL</finalName>
                     <archive>
                         <manifest>
                             <addClasspath>true</addClasspath>
                             <mainClass>smallsql.tools.CommandLine</mainClass>
+                            <addDefaultImplementationEntries>true</addDefaultImplementationEntries>
                         </manifest>
                     </archive>
                 </configuration>

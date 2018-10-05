@@ -5,64 +5,68 @@ package smallsql.tools;
 
 import smallsql.database.SSDriver;
 
-import javax.swing.*;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.sql.*;
 import java.util.Properties;
+import java.util.Scanner;
 
-/**
- * @author Volker Berlin
- */
 public class CommandLine {
 
-    public static void main(String[] args) throws Exception {
-        System.out.println("SmallSQL Database command line tool\n");
+    public static void main(String... args) throws Exception {
+        System.err.println(String.format("SmallSQL Database CLI <v%d.%d>%n", config.VERSION_NUMBER_MAJOR, config.VERSION_NUMBER_MINOR));
+
         Connection con = new SSDriver().connect("jdbc:smallsql:db1?create=true", new Properties());
         Statement st = con.createStatement();
-        if (args.length > 0) {
-            con.setCatalog(args[0]);
-        }
-        System.out.println("\tVersion: " + con.getMetaData().getDatabaseProductVersion());
-        System.out.println("\tCurrent database: " + con.getCatalog());
-        System.out.println();
-        System.out.println("\tUse the USE command to change the database context.");
-        System.out.println("\tType 2 times ENTER to execute any SQL command.");
 
-        StringBuffer command = new StringBuffer();
-        BufferedReader input = new BufferedReader(new InputStreamReader(System.in));
+        printHelp(con);
+
+        Scanner sc = new Scanner(System.in);
+        StringBuilder commandBuilder = new StringBuilder();
+
         while (true) {
-            try {
-                String line;
+            if (commandBuilder.length() == 0) {
+                System.out.print("\nCommand (<q> to exit): ");
+            }
+            String currentLine = sc.nextLine();
+            currentLine = currentLine == null ? "" : currentLine.trim();
+            commandBuilder.append(currentLine).append('\n');
+
+            // Commit current command
+            if (currentLine.endsWith(";")) {
+                String prep = commandBuilder.toString().trim();
+                System.out.println("Executing...\n");
                 try {
-                    line = input.readLine();
-                } catch (IOException ex) {
-                    ex.printStackTrace();
-                    JOptionPane.showMessageDialog(null, "You need to start the command line of the \nSmallSQL Database with a console window:\n\n       java -jar smallsql.jar\n\n" + ex, "Fatal Error", JOptionPane.OK_OPTION);
-                    return;
-                }
-                if (line == null) {
-                    return; //end of program
-                }
-                if (line.length() == 0 && command.length() > 0) {
-                    boolean isRS = st.execute(command.toString());
-                    if (isRS) {
+                    boolean hasOutput = st.execute(prep.substring(0, prep.length() - 1));
+                    if (hasOutput) {
                         printRS(st.getResultSet());
                     }
-                    command.setLength(0);
+                } catch (SQLException e) {
+                    System.err.println(e.getLocalizedMessage());
+                } finally {
+                    commandBuilder.setLength(0);
                 }
-                command.append(line).append('\n');
-            } catch (Exception e) {
-                command.setLength(0);
-                e.printStackTrace();
+
+            } else if (currentLine.equals("q") || currentLine.equals("Q")) {
+                sc.close();
+                break;
             }
         }
-
+        st.close();
+        System.err.println("Bye!");
     }
 
+    private static void printHelp(Connection con) throws SQLException {
+        System.out.println(String.format("Connection version: <%s>, current database: %s%n",
+                con.getMetaData().getDatabaseProductVersion(),
+                con.getCatalog()));
+        System.out.println("Type 'USE' to change the database context.");
+        System.out.println("Command end with ';' with be executed.");
+    }
 
     private static void printRS(ResultSet rs) throws SQLException {
+        System.out.println("Result:");
         ResultSetMetaData md = rs.getMetaData();
         int count = md.getColumnCount();
         for (int i = 1; i <= count; i++) {

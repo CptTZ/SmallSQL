@@ -33,6 +33,7 @@
 package smallsql.database;
 
 import smallsql.database.language.Language;
+import smallsql.tools.config;
 import smallsql.tools.util;
 
 import java.sql.*;
@@ -41,8 +42,6 @@ import java.util.StringTokenizer;
 import java.util.logging.Logger;
 
 public class SSDriver implements Driver {
-
-    static final String URL_PREFIX = "jdbc:smallsql";
 
     static SSDriver drv;
 
@@ -106,7 +105,7 @@ public class SSDriver implements Driver {
 
 
     public boolean acceptsURL(String url) {
-        return url.startsWith(URL_PREFIX);
+        return url.startsWith(config.URL_PREFIX);
     }
 
 
@@ -120,12 +119,12 @@ public class SSDriver implements Driver {
 
 
     public int getMajorVersion() {
-        return 0;
+        return config.VERSION_NUMBER_MAJOR;
     }
 
 
     public int getMinorVersion() {
-        return 21;
+        return config.VERSION_NUMBER_MINOR;
     }
 
 

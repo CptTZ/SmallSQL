@@ -1,13 +1,10 @@
-SmallSQL Database 
-Version 0.21
+# SmallSQL Database
 
-Copyright 2004-2011, by Volker Berlin
-Support: http://www.smallsql.de/support.html
+SmallSQL Database is a free DBMS library for the Java(tm) platform.
 
-Introduction
-=============
-SmallSQL Database is a free DBMS library for the Java(tm) platform.  It runs 
-on the Java 2 Platform (JDK 1.4 or later) and implements the JDBC 3.0 API.
+## Original author info
+
+It runs on the Java 2 Platform (JDK 1.4 or later) and implements the JDBC 3.0 API.
 
 SmallSQL Database is licensed under the terms of the GNU Lesser General
 Public License (LGPL).  A copy of the license is included in the
@@ -17,39 +14,71 @@ Please note that SmallSQL Database is distributed WITHOUT ANY WARRANTY;
 without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
 PARTICULAR PURPOSE.  Please refer to the license for details.
 
+Copyright 2004-2011, by Volker Berlin
+Support: http://www.smallsql.de/support.html
 
-Installation
-=============
-See online at http://www.smallsql.de/doc/install.htm
-or in documentation download at doc\install.htm
+## SPECIAL NOTE
 
+It's a project for educational purpose, DO NOT USE IN PRODUCTION!
 
-Changes in Version 0.21 (2011-06-22)
-====================================
+## Build
+
+Current build dependencies are:
+
+- OpenJDK Runtime Environment 18.9 (build 11+28)
+- Maven 3.5.4
+- JUnit 5
+
+This project uses **Java 11**, so make sure you have that installed on your computer, and have its binaries added to `PATH`.
+
+In order to build, just type the following command in console, and it should build without running test cases, packed JAR file in the `target` folder.
+
+```batch
+./mvnw clean package -DskipTests
+```
+
+## Installation
+
+See online at <http://www.smallsql.de/doc/install.htm> or in documentation download at doc\install.htm
+
+For SQL syntax used in this project, see <http://smallsql.de/doc/sqlsyntax.html>
+
+To run SmallSQL in CLI mode, type this:
+
+```bash
+java -jar target/SmallSQL.jar
+```
+
+Have fun with this **toy** project.
+
+## Changelist
+
+### Changes in Version 0.22 (2018-10-05)
+
+- Adapted to modern world (After 7 years of sleeping?)
+
+### Changes in Version 0.21 (2011-06-22)
 - ResultSet.getBinaryStream() implemented.
 - Added function year().
 - Fix conversion of binary data to String (bug 3001088).
 - Add JDBC URL property readonly. With readonly it is possible to share 
   one database between multiple Java processes.
-- Fix a thread problem with RandomAccessFile.   
+- Fix a thread problem with RandomAccessFile.
 
 
+### Changes in Version 0.20 (2008-12-14)
 
-Changes in Version 0.20 (2008-12-14)
-====================================
 - Add AUTO_INCREMENT as alias for IDENTITY.
 - Add the keyword LIMIT as alias for the TOP syntax of a SELECT
 - Improve the handling from IDENTITY values (bug 1954682).
 - Fix a bug with different writing of the same database.
 - Fix a thread bug with concurrent reading of the same table.
 - Fix an ArrayIndexOutOfBoundsException with large values >32K (bug 2264600).
-- CREATE TABLE and CREATE VIEW are now in a transaction. 
-  This make a rollback possible. (bug 2256579).
+- CREATE TABLE and CREATE VIEW are now in a transaction. This make a rollback possible. (bug 2256579).
 
 
+### Changes in Version 0.19 (2007-07-31)
 
-Changes in Version 0.19 (2007-07-31)
-====================================
 - Add support for multi language error messages. Support for English, 
   Italian and German was added.
 - Improve the performance of a simple JOIN.
@@ -67,8 +96,8 @@ Changes in Version 0.19 (2007-07-31)
 
 
 
-Changes in Version 0.18 (2007-06-10)
-====================================
+### Changes in Version 0.18 (2007-06-10)
+
 - Fix bugs with the methods isBeforeFirst(), isFirst(), isLast() and isAfterLast().
   The problems occur mostly with empty ResultSets and together with ORDER BY or GROUP BY.
 - Fix the scrolling of scrollable, updatable ResultSets with inserted rows.
@@ -79,11 +108,10 @@ Changes in Version 0.18 (2007-06-10)
   with CREATE TABLE and ALTER TABLE to create doubled columns (bug 1731088).
 - Unicode characters are possible in JDBC URL parameters now (bug 1732416).
 - The method getPropertyInfo is implemented now.
-  
 
 
-Changes in Version 0.17 (2007-02-15)
-====================================
+### Changes in Version 0.17 (2007-02-15)
+
 - STUFF as alias for the INSERT SQL function added.
 - ALTER TABLE was added.
 - A reading bug of DateTime values with daylight saving was fixed.
@@ -96,17 +124,16 @@ Changes in Version 0.17 (2007-02-15)
 - The driver ignores now right blanks if a CHAR value is compared with a VARCHAR value (bug 1654121).
 
 
+### Changes in Version 0.16 (2006-10-21)
 
-Changes in Version 0.16 (2006-10-21)
-====================================
 - A ConcurrentModificationException was fixed on Connection.close().
 - Command line tool was added.
 - A call of getMoreResults() has not change the results from getUpdateCount() and getResultSet().
 
 
 
-Changes in Version 0.15 (2006-06-28)
-====================================
+### Changes in Version 0.15 (2006-06-28)
+
 - The HAVING clause has not work.
 - A bug with date time functions in GROUP BY clause was fixed.
 - Wrong ResultSetMetaData with GROUP BY was fixed.
@@ -127,8 +154,8 @@ Changes in Version 0.15 (2006-06-28)
   There is now a block code coverage of 80% with the EMMA tool.
 
 
-Changes in Version 0.14 (2006-05-20)
-====================================
+### Changes in Version 0.14 (2006-05-20)
+
 - Some bugs for multiple execution of a PreparedStatment was fixed.
 - The method getGeneratedKeys() and related method was implemented.
 - The batch processing to the Statement class was implemented. 
@@ -141,8 +168,8 @@ Changes in Version 0.14 (2006-05-20)
 - There is now a block code coverage of 75% with the EMMA tool.
 
 
-Changes in Version 0.13 (2006-04-09)
-====================================
+### Changes in Version 0.13 (2006-04-09)
+
 - The precision for varchar and varbinary was saved wrong with 38 before.
 - Negativ numeric and decimal values was rounded wrong with the getInt() method.
 - The prefix "file:" on the database name will be ignored now. This is valid 
@@ -151,8 +178,8 @@ Changes in Version 0.13 (2006-04-09)
 - The URL property "dbpath" and "create" was added.
 
 
-Changes in Version 0.12 (2006-03-05)
-=====================================
+### Changes in Version 0.12 (2006-03-05)
+
 - Fix for CONVERT function with timestamp values.
 - Fix for Date values toString() with values before 1970.
 - Follow SQL function was added:
@@ -170,8 +197,8 @@ Changes in Version 0.12 (2006-03-05)
 - Now delete also the lob data file if the table is drop.
 
 
-Changes in Version 0.11 (2006-02-11)
-=====================================
+### Changes in Version 0.11 (2006-02-11)
+
 - Fix for NPE with DatabaseMetaData.getTables() in not connect mode for JDBC Navigator.
 - Free the cached resources of a database if all connection to this database are closed.
 - A more helpful exception if a connection is closed instead of a NPE.
@@ -179,8 +206,8 @@ Changes in Version 0.11 (2006-02-11)
   LONGVARCHAR, LONGVARBINARY, VARCHAR  larger 127 characters and VARBINARY larger 127 bytes.
 
 
-Chnages in Version 0.10 (2006-02-05)
-=====================================
+### Changes in Version 0.10 (2006-02-05)
+
 - Driver classname was changed vom smallsql.server.SSDriver to smallsql.database.SSDriver
 - Fileformat was changed.
 - Follow SQL functions was added: 
@@ -208,14 +235,19 @@ Chnages in Version 0.10 (2006-02-05)
 	* TAN
 	* TRUNCATE
 
+### Changes in Version 0.02 (2005-05-22)
 
-Changes in Version 0.02 (2005-05-22)
-=====================================
 - The most DatabaseMetaData are implement now.
 - Bug fixes for the JDBC Navigator (http://home.planet.nl/~demun000/thomas_projects/jdbcnav).
 - Bug fixes for the DbVisualizer 4.2.
 
 
-Changes in Version 0.01 (2005-04-16)
-=====================================
+### Changes in Version 0.01 (2005-04-16)
+
 - First public version
+
+## Other excellent Java based DBMS
+
+- Mckoi SQL Database: <https://github.com/Mckoi/origsqldb>
+- Mckoi Distributed Database: <https://github.com/Mckoi/mckoiddb>
+- HyperSQL: <http://hsqldb.org/>
