@@ -33,6 +33,8 @@
  */
 package smallsql.junit;
 
+import smallsql.basicTestFrame;
+
 import java.sql.*;
 
 import static smallsql.junit.JunitTestExtended.*;
@@ -43,7 +45,7 @@ import static smallsql.junit.JunitTestExtended.*;
 public class TestOther extends BasicTestCase {
 
     public void testInsertSelect() throws Exception {
-        Connection con = AllTests.getConnection();
+        Connection con = basicTestFrame.getConnection();
         try {
             con.createStatement().execute("Create Table InsertSelect (i counter, v varchar(20))");
             assertEqualsRsValue(new Integer(0), "Select count(*) from InsertSelect");
@@ -63,7 +65,7 @@ public class TestOther extends BasicTestCase {
 
 
     public void testDistinct() throws Exception {
-        Connection con = AllTests.getConnection();
+        Connection con = basicTestFrame.getConnection();
         try {
             con.createStatement().execute("Create Table TestDistinct (i counter, v varchar(20), n bigint, b boolean)");
             assertRowCount(0, "Select * From TestDistinct");
@@ -90,7 +92,7 @@ public class TestOther extends BasicTestCase {
 
 
     public void testNoFromResult() throws Exception {
-        Connection con = AllTests.getConnection();
+        Connection con = basicTestFrame.getConnection();
 
         Statement st = con.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_READ_ONLY);
         ResultSet rs = st.executeQuery("Select 12, 'qwert' alias");
@@ -141,7 +143,7 @@ public class TestOther extends BasicTestCase {
 
 
     public void testInSelect() throws Exception {
-        Connection con = AllTests.getConnection();
+        Connection con = basicTestFrame.getConnection();
         try {
             con.createStatement().execute("Create Table TestInSelect (i counter, v varchar(20), n bigint, b boolean)");
             assertRowCount(0, "Select * From TestInSelect WHere i In (Select i from TestInSelect)");
@@ -164,7 +166,7 @@ public class TestOther extends BasicTestCase {
 
 
     public void testSetTransaction() throws Exception {
-        Connection con = AllTests.getConnection();
+        Connection con = basicTestFrame.getConnection();
         try {
             con.createStatement().execute("Set Transaction Isolation Level Read Uncommitted");
             assertEquals(Connection.TRANSACTION_READ_UNCOMMITTED, con.getTransactionIsolation());
@@ -199,7 +201,7 @@ public class TestOther extends BasicTestCase {
 
 
     public void testManyColumns() throws Exception {
-        Connection con = AllTests.getConnection();
+        Connection con = basicTestFrame.getConnection();
         Statement st = con.createStatement();
         dropTable(con, "ManyCols");
         StringBuffer buf = new StringBuffer("Create Table ManyCols(");
@@ -211,7 +213,7 @@ public class TestOther extends BasicTestCase {
 
         st.execute(buf.toString());
         con.close();
-        con = AllTests.getConnection();
+        con = basicTestFrame.getConnection();
         st = con.createStatement();
         assertEquals(1, st.executeUpdate("Insert Into ManyCols(column260) Values(123456)"));
         st.execute("Drop Table ManyCols");
@@ -224,7 +226,7 @@ public class TestOther extends BasicTestCase {
      * A static or dynamic string parameter has the data type VARCHAR
      */
     public void testCharEqualsVarchar() throws Exception {
-        Connection con = AllTests.getConnection();
+        Connection con = basicTestFrame.getConnection();
         try {
             con.createStatement().execute("Create Table CharEqualsVarchar (c char(10))");
             assertRowCount(0, "Select * From CharEqualsVarchar");
@@ -252,7 +254,7 @@ public class TestOther extends BasicTestCase {
 
 
     public void testLike() throws Exception {
-        Connection con = AllTests.getConnection();
+        Connection con = basicTestFrame.getConnection();
         try {
             con.createStatement().execute("Create Table Like (c varchar(20))");
 
@@ -280,7 +282,7 @@ public class TestOther extends BasicTestCase {
 
 
     public void testBinaryStore() throws Exception {
-        Connection con = AllTests.getConnection();
+        Connection con = basicTestFrame.getConnection();
         try {
             Statement st = con.createStatement();
             st.execute("Create Table Binary (b varbinary(20))");
@@ -312,18 +314,18 @@ public class TestOther extends BasicTestCase {
     public void testCatalog() throws Exception {
         Connection con = DriverManager.getConnection("jdbc:smallsql");
         assertEquals("", con.getCatalog());
-        con.setCatalog(AllTests.CATALOG);
-        assertEquals(AllTests.CATALOG, con.getCatalog());
+        con.setCatalog(basicTestFrame.CATALOG);
+        assertEquals(basicTestFrame.CATALOG, con.getCatalog());
         con.close();
 
         con = DriverManager.getConnection("jdbc:smallsql");
         assertEquals("", con.getCatalog());
-        con.createStatement().execute("Use " + AllTests.CATALOG);
-        assertEquals(AllTests.CATALOG, con.getCatalog());
+        con.createStatement().execute("Use " + basicTestFrame.CATALOG);
+        assertEquals(basicTestFrame.CATALOG, con.getCatalog());
         con.close();
 
-        con = DriverManager.getConnection("jdbc:smallsql?dbpath=" + AllTests.CATALOG);
-        assertEquals(AllTests.CATALOG, con.getCatalog());
+        con = DriverManager.getConnection("jdbc:smallsql?dbpath=" + basicTestFrame.CATALOG);
+        assertEquals(basicTestFrame.CATALOG, con.getCatalog());
         con.close();
     }
 }

@@ -32,6 +32,8 @@
  */
 package smallsql.junit;
 
+import smallsql.basicTestFrame;
+
 import java.math.BigDecimal;
 import java.sql.*;
 
@@ -95,7 +97,7 @@ public class TestJoins extends BasicTestCase {
 
 
     private void clear() throws SQLException {
-        Connection con = AllTests.getConnection();
+        Connection con = basicTestFrame.getConnection();
         dropTable(con, table);
         dropTable(con, table2);
         dropTable(con, table3);
@@ -108,14 +110,14 @@ public class TestJoins extends BasicTestCase {
 
     public void setUp() throws Exception {
         clear();
-        Connection con = AllTests.getConnection();
+        Connection con = basicTestFrame.getConnection();
         Statement st = con.createStatement();
         st.execute("create table " + table + "(a " + testValue.dataType + " PRIMARY KEY, b " + testValue.dataType + ")");
         st.execute("create table " + table2 + "(c " + testValue.dataType + " PRIMARY KEY, d " + testValue.dataType + ")");
         st.execute("create table " + table3 + "(c " + testValue.dataType + " PRIMARY KEY, d " + testValue.dataType + ")");
         st.close();
         con.close();
-        con = AllTests.getConnection();
+        con = basicTestFrame.getConnection();
         PreparedStatement pr = con.prepareStatement("INSERT into " + table + "(a,b) Values(?,?)");
         insertValues(pr);
         pr.close();
@@ -156,7 +158,7 @@ public class TestJoins extends BasicTestCase {
     }
 
     public void runTest() throws Exception {
-        Connection con = AllTests.getConnection();
+        Connection con = basicTestFrame.getConnection();
         Statement st = con.createStatement();
         ResultSet rs;
 

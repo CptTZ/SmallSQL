@@ -33,6 +33,8 @@
  */
 package smallsql.junit;
 
+import smallsql.basicTestFrame;
+
 import java.io.File;
 import java.sql.*;
 
@@ -44,7 +46,7 @@ import static smallsql.junit.JunitTestExtended.*;
 public class TestExceptionMethods extends BasicTestCase {
 
     public void testForwardOnly() throws Exception {
-        Connection con = AllTests.getConnection();
+        Connection con = basicTestFrame.getConnection();
         try {
             con.createStatement().execute("Create Table ExceptionMethods(v varchar(30))");
 
@@ -131,29 +133,29 @@ public class TestExceptionMethods extends BasicTestCase {
     public void testGetConnection() throws Exception {
         Connection con;
         try {
-            con = DriverManager.getConnection(AllTests.JDBC_URL + "?abc");
+            con = DriverManager.getConnection(basicTestFrame.JDBC_URL + "?abc");
             con.close();
             fail("SQLException should be thrown");
         } catch (SQLException ex) {
             // is OK
         }
-        con = DriverManager.getConnection(AllTests.JDBC_URL + "? ");
+        con = DriverManager.getConnection(basicTestFrame.JDBC_URL + "? ");
         con.close();
 
-        con = DriverManager.getConnection(AllTests.JDBC_URL + "?a=b; ; c=d  ; e = f; ; ");
+        con = DriverManager.getConnection(basicTestFrame.JDBC_URL + "?a=b; ; c=d  ; e = f; ; ");
 
         // open 2 Connections with different written path
-        Connection con2 = DriverManager.getConnection("jdbc:smallsql:" + new File(AllTests.CATALOG).getAbsolutePath());
+        Connection con2 = DriverManager.getConnection("jdbc:smallsql:" + new File(basicTestFrame.CATALOG).getAbsolutePath());
         con.close();
         con2.close();
 
-        con = DriverManager.getConnection("jdbc:smallsql:file:" + AllTests.CATALOG);
+        con = DriverManager.getConnection("jdbc:smallsql:file:" + basicTestFrame.CATALOG);
         con.close();
     }
 
 
     public void testDuplicatedColumnCreate() throws Exception {
-        Connection con = AllTests.getConnection();
+        Connection con = basicTestFrame.getConnection();
         Statement st = con.createStatement();
         try {
             st.execute("Create Table DuplicatedColumn(col INT, Col INT)");
@@ -165,7 +167,7 @@ public class TestExceptionMethods extends BasicTestCase {
 
 
     public void testDuplicatedColumnAlter() throws Exception {
-        Connection con = AllTests.getConnection();
+        Connection con = basicTestFrame.getConnection();
         try {
             Statement st = con.createStatement();
             st.execute("Create Table DuplicatedColumn(col INT)");
@@ -182,7 +184,7 @@ public class TestExceptionMethods extends BasicTestCase {
 
 
     public void testDuplicatedColumnInsert() throws Exception {
-        Connection con = AllTests.getConnection();
+        Connection con = basicTestFrame.getConnection();
         try {
             Statement st = con.createStatement();
             st.execute("Create Table DuplicatedColumn(col INT)");
@@ -202,7 +204,7 @@ public class TestExceptionMethods extends BasicTestCase {
      * The fail of creating table should not produce any files
      */
     public void testDuplicatedCreateTable() throws Exception {
-        Connection con = AllTests.getConnection();
+        Connection con = basicTestFrame.getConnection();
         try {
             dropTable(con, "DuplicatedTable");
             Statement st = con.createStatement();
@@ -223,7 +225,7 @@ public class TestExceptionMethods extends BasicTestCase {
 
     private int countFiles(String fileNameStart) {
         int count = 0;
-        String names[] = new File(AllTests.CATALOG).list();
+        String names[] = new File(basicTestFrame.CATALOG).list();
         for (int i = 0; i < names.length; i++) {
             if (names[i].startsWith(fileNameStart)) {
                 count++;
@@ -234,7 +236,7 @@ public class TestExceptionMethods extends BasicTestCase {
 
 
     public void testAmbiguousColumn() throws Exception {
-        Connection con = AllTests.getConnection();
+        Connection con = basicTestFrame.getConnection();
         try {
             Statement st = con.createStatement();
             st.execute("create table foo (myint number)");
@@ -253,7 +255,7 @@ public class TestExceptionMethods extends BasicTestCase {
 
 
     public void testClosedStatement() throws Exception {
-        Connection con = AllTests.getConnection();
+        Connection con = basicTestFrame.getConnection();
         Statement st = con.createStatement();
         st.close();
         try {
@@ -278,7 +280,7 @@ public class TestExceptionMethods extends BasicTestCase {
 
 
     public void testClosedPreparedStatement() throws Exception {
-        Connection con = AllTests.getConnection();
+        Connection con = basicTestFrame.getConnection();
         PreparedStatement pr = con.prepareStatement("Select ?");
         pr.setInt(1, 1);
         pr.close();

@@ -32,6 +32,8 @@
  */
 package smallsql.junit;
 
+import smallsql.basicTestFrame;
+
 import java.math.BigDecimal;
 import java.sql.*;
 
@@ -68,7 +70,7 @@ public class TestDataTypes extends BasicTestCase {
 
     public void tearDown() {
         try {
-            Connection con = AllTests.getConnection();
+            Connection con = basicTestFrame.getConnection();
             Statement st = con.createStatement();
             st.execute("drop table " + table);
             st.close();
@@ -82,7 +84,7 @@ public class TestDataTypes extends BasicTestCase {
     }
 
     public void runTest() throws Throwable {
-        Connection con = AllTests.getConnection();
+        Connection con = basicTestFrame.getConnection();
         Statement st = con.createStatement();
         st.execute("Create Table " + table + "(abc " + datatype + ")");
         String name = "abc";
@@ -177,7 +179,7 @@ public class TestDataTypes extends BasicTestCase {
 
         // remove all resource for reloading the tables from file
         con.close();
-        con = AllTests.getConnection();
+        con = basicTestFrame.getConnection();
         st = con.createStatement();
 
         for (int i = 0; i < values.length; i++) {

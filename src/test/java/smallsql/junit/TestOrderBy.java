@@ -32,6 +32,8 @@
  */
 package smallsql.junit;
 
+import smallsql.basicTestFrame;
+
 import java.sql.*;
 import java.util.ArrayList;
 
@@ -54,7 +56,7 @@ public class TestOrderBy extends BasicTestCase {
     public void init() {
         if (init) return;
         try {
-            Connection con = AllTests.getConnection();
+            Connection con = basicTestFrame.getConnection();
             dropTable(con, table1);
             dropTable(con, table2);
             dropTable(con, table3);
@@ -116,7 +118,7 @@ public class TestOrderBy extends BasicTestCase {
 
     public void testOrderBy_char() throws Exception {
         init();
-        Connection con = AllTests.getConnection();
+        Connection con = basicTestFrame.getConnection();
         Statement st = con.createStatement();
         ResultSet rs;
         String oldValue;
@@ -144,7 +146,7 @@ public class TestOrderBy extends BasicTestCase {
 
     public void testOrderBy_varchar() throws Exception {
         init();
-        Connection con = AllTests.getConnection();
+        Connection con = basicTestFrame.getConnection();
         Statement st = con.createStatement();
         ResultSet rs;
         String oldValue;
@@ -171,7 +173,7 @@ public class TestOrderBy extends BasicTestCase {
 
     public void testOrderBy_varchar_asc() throws Exception {
         init();
-        Connection con = AllTests.getConnection();
+        Connection con = basicTestFrame.getConnection();
         Statement st = con.createStatement();
         ResultSet rs;
         String oldValue;
@@ -199,7 +201,7 @@ public class TestOrderBy extends BasicTestCase {
 
     public void testOrderBy_varchar_desc() throws Exception {
         init();
-        Connection con = AllTests.getConnection();
+        Connection con = basicTestFrame.getConnection();
         Statement st = con.createStatement();
         ResultSet rs;
         String oldValue;
@@ -227,7 +229,7 @@ public class TestOrderBy extends BasicTestCase {
 
     public void testOrderBy_varchar_DescAsc() throws Exception {
         init();
-        Connection con = AllTests.getConnection();
+        Connection con = basicTestFrame.getConnection();
         Statement st = con.createStatement();
         ResultSet rs;
         String oldValue;
@@ -255,7 +257,7 @@ public class TestOrderBy extends BasicTestCase {
 
     public void testOrderBy_varchar_GroupBy() throws Exception {
         init();
-        Connection con = AllTests.getConnection();
+        Connection con = basicTestFrame.getConnection();
         Statement st = con.createStatement();
         ResultSet rs;
         String oldValue;
@@ -281,7 +283,7 @@ public class TestOrderBy extends BasicTestCase {
 
     public void testOrderBy_varchar_Join() throws Exception {
         init();
-        Connection con = AllTests.getConnection();
+        Connection con = basicTestFrame.getConnection();
         Statement st = con.createStatement();
         ResultSet rs;
         String oldValue;
@@ -304,7 +306,7 @@ public class TestOrderBy extends BasicTestCase {
 
     public void testOrderBy_nvarchar() throws Exception {
         init();
-        Connection con = AllTests.getConnection();
+        Connection con = basicTestFrame.getConnection();
         Statement st = con.createStatement();
         ResultSet rs;
         String oldValue;
@@ -330,7 +332,7 @@ public class TestOrderBy extends BasicTestCase {
 
     public void testOrderBy_int() throws Exception {
         init();
-        Connection con = AllTests.getConnection();
+        Connection con = basicTestFrame.getConnection();
         Statement st = con.createStatement();
         ResultSet rs;
         Integer oldValue;
@@ -356,7 +358,7 @@ public class TestOrderBy extends BasicTestCase {
 
     public void test_function() throws Exception {
         init();
-        Connection con = AllTests.getConnection();
+        Connection con = basicTestFrame.getConnection();
         Statement st = con.createStatement();
         ResultSet rs;
         int oldValue;
@@ -382,7 +384,7 @@ public class TestOrderBy extends BasicTestCase {
 
     public void test_functionAscDesc() throws Exception {
         init();
-        Connection con = AllTests.getConnection();
+        Connection con = basicTestFrame.getConnection();
         Statement st = con.createStatement();
         ResultSet rs;
         int oldValue;
@@ -415,7 +417,7 @@ public class TestOrderBy extends BasicTestCase {
 
     public void testOrderBy_int_asc() throws Exception {
         init();
-        Connection con = AllTests.getConnection();
+        Connection con = basicTestFrame.getConnection();
         Statement st = con.createStatement();
         ResultSet rs;
         Integer oldValue;
@@ -441,7 +443,7 @@ public class TestOrderBy extends BasicTestCase {
 
     public void testOrderBy_int_desc() throws Exception {
         init();
-        Connection con = AllTests.getConnection();
+        Connection con = basicTestFrame.getConnection();
         Statement st = con.createStatement();
         ResultSet rs;
         Integer oldValue;
@@ -468,7 +470,7 @@ public class TestOrderBy extends BasicTestCase {
 
     public void testOrderBy_double() throws Exception {
         init();
-        Connection con = AllTests.getConnection();
+        Connection con = basicTestFrame.getConnection();
         Statement st = con.createStatement();
         ResultSet rs;
         Double oldValue;
@@ -494,7 +496,7 @@ public class TestOrderBy extends BasicTestCase {
 
     public void testOrderBy_real() throws Exception {
         init();
-        Connection con = AllTests.getConnection();
+        Connection con = basicTestFrame.getConnection();
         Statement st = con.createStatement();
         ResultSet rs;
         Float oldValue;
@@ -520,7 +522,7 @@ public class TestOrderBy extends BasicTestCase {
 
     public void test_bigint() throws Exception {
         init();
-        Connection con = AllTests.getConnection();
+        Connection con = basicTestFrame.getConnection();
         Statement st = con.createStatement();
         ResultSet rs;
         Long oldValue;
@@ -546,7 +548,7 @@ public class TestOrderBy extends BasicTestCase {
 
     public void test_bigint_withDoublicateValues() throws Exception {
         init();
-        Connection con = AllTests.getConnection();
+        Connection con = basicTestFrame.getConnection();
         Statement st = con.createStatement();
         ResultSet rs;
         Long oldValue;
@@ -573,7 +575,7 @@ public class TestOrderBy extends BasicTestCase {
 
     public void test_boolean() throws Exception {
         init();
-        Connection con = AllTests.getConnection();
+        Connection con = basicTestFrame.getConnection();
         Statement st = con.createStatement();
         ResultSet rs;
         boolean oldValue;
@@ -608,7 +610,7 @@ public class TestOrderBy extends BasicTestCase {
 
     public void testVarcharEmpty() throws Exception {
         init();
-        Connection con = AllTests.getConnection();
+        Connection con = basicTestFrame.getConnection();
         Statement st = con.createStatement();
         ResultSet rs;
 
@@ -629,7 +631,7 @@ public class TestOrderBy extends BasicTestCase {
 
     public void testVarbinaryEmpty() throws Exception {
         init();
-        Connection con = AllTests.getConnection();
+        Connection con = basicTestFrame.getConnection();
         Statement st = con.createStatement();
         ResultSet rs;
 
@@ -650,7 +652,7 @@ public class TestOrderBy extends BasicTestCase {
 
     public void test2Columns() throws Exception {
         init();
-        Connection con = AllTests.getConnection();
+        Connection con = basicTestFrame.getConnection();
         Statement st = con.createStatement();
         ResultSet rs = null;
         String oldValue;
@@ -698,7 +700,7 @@ public class TestOrderBy extends BasicTestCase {
 
     public void testOrderBy_Scollable() throws Exception {
         init();
-        Connection con = AllTests.getConnection();
+        Connection con = basicTestFrame.getConnection();
         Statement st = con.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
         ResultSet rs;
         int count;
@@ -729,7 +731,7 @@ public class TestOrderBy extends BasicTestCase {
 
     public void testOrderBy_ScollableDesc() throws Exception {
         init();
-        Connection con = AllTests.getConnection();
+        Connection con = basicTestFrame.getConnection();
         Statement st = con.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
         ResultSet rs;
         int count;
@@ -760,7 +762,7 @@ public class TestOrderBy extends BasicTestCase {
 
     public void testOrderBy_Scollable2() throws Exception {
         init();
-        Connection con = AllTests.getConnection();
+        Connection con = basicTestFrame.getConnection();
         Statement st = con.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
         ResultSet rs = st.executeQuery("SELECT * FROM " + table1 + " ORDER  by v");
 
@@ -788,7 +790,7 @@ public class TestOrderBy extends BasicTestCase {
 
     public void testUnion() throws Exception {
         init();
-        Connection con = AllTests.getConnection();
+        Connection con = basicTestFrame.getConnection();
         Statement st = con.createStatement();
         ResultSet rs;
         String oldValue;

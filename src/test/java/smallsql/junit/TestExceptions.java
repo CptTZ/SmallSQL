@@ -32,6 +32,8 @@
  */
 package smallsql.junit;
 
+import smallsql.basicTestFrame;
+
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -79,7 +81,7 @@ public class TestExceptions extends BasicTestCase {
 
     private void init() throws Exception {
         if (init) return;
-        Connection con = AllTests.getConnection();
+        Connection con = basicTestFrame.getConnection();
         Statement st = con.createStatement();
         dropTable(con, "exceptions");
         st.execute("Create Table exceptions (c varchar(30), i int)");
@@ -89,7 +91,7 @@ public class TestExceptions extends BasicTestCase {
 
     public void runTest() throws Exception {
         init();
-        Connection con = AllTests.getConnection();
+        Connection con = basicTestFrame.getConnection();
         Statement st = con.createStatement();
         ResultSet rs = null;
         try {

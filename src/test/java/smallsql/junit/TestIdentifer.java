@@ -32,6 +32,8 @@
  */
 package smallsql.junit;
 
+import smallsql.basicTestFrame;
+
 import java.sql.Connection;
 import java.sql.ResultSet;
 
@@ -53,7 +55,7 @@ public class TestIdentifer extends BasicTestCase {
 
 
     public void testQuoteIdentifer() throws Exception {
-        Connection con = AllTests.getConnection();
+        Connection con = basicTestFrame.getConnection();
         dropTable(con, "QuoteIdentifer");
         con.createStatement().execute("create table \"QuoteIdentifer\"(\"a\" int default 5)");
         ResultSet rs = con.createStatement().executeQuery("SELECT tbl.* from \"QuoteIdentifer\" tbl");

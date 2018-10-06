@@ -32,9 +32,11 @@
  */
 package smallsql.database;
 
-import smallsql.database.SQLToken;
-import smallsql.database.SQLTokenizer;
-import smallsql.junit.AllTests;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInstance;
+import smallsql.basicTestFrame;
 import smallsql.junit.BasicTestCase;
 
 import java.io.PrintStream;
@@ -53,6 +55,7 @@ import static smallsql.junit.JunitTestExtended.*;
  *
  * @author Saverio Miroddi
  */
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class TestTokenizer extends BasicTestCase {
     private static final String TABLE_NAME = "table_comments";
     private static final PrintStream out = System.out;
@@ -61,9 +64,10 @@ public class TestTokenizer extends BasicTestCase {
     private Connection conn;
     private Statement stat;
 
+    @BeforeAll
     public void setUp() throws SQLException {
         if (!init) {
-            conn = AllTests.createConnection("?locale=en", null);
+            conn = basicTestFrame.createConnection("?locale=en", null);
             stat = conn.createStatement();
             init = true;
         }
@@ -71,12 +75,18 @@ public class TestTokenizer extends BasicTestCase {
         createTable();
     }
 
+    @AfterAll
     public void tearDown() throws SQLException {
         if (conn != null) {
-            dropTable();
             stat.close();
             conn.close();
         }
+        conn = basicTestFrame.createConnection("?locale=en", null);
+        stat = conn.createStatement();
+        // Direct Drop table would crash this
+        dropTable();
+        stat.close();
+        conn.close();
     }
 
     private void createTable() throws SQLException {
@@ -90,7 +100,7 @@ public class TestTokenizer extends BasicTestCase {
                 "INSERT INTO " + TABLE_NAME + " VALUES (1, 3)");
     }
 
-    private void dropTable() throws SQLException {
+    private void dropTable() {
         try {
             stat.execute("DROP TABLE " + TABLE_NAME);
         } catch (SQLException e) {
@@ -99,6 +109,7 @@ public class TestTokenizer extends BasicTestCase {
         }
     }
 
+    @Test
     public void testSingleLine() throws SQLException {
         final String SQL_1 =
                 "SELECT 10/2--mycomment\n" +
@@ -115,9 +126,10 @@ public class TestTokenizer extends BasicTestCase {
         final String SQL_2 =
                 "SELECT 10/2 - - this must fail ";
 
-        failureTest(SQL_2, "Tokenized not-comment as a line-comment.");
+        failureTest(SQL_2, "Tokenized not-comment as a line-comment.", "Syntax error");
     }
 
+    @Test
     public void testMultiLine() throws SQLException {
         final String SQL_1 =
                 "SELECT 10/2, id, SUM(myint) /* comment, 'ignore it.   \n" +
@@ -130,10 +142,10 @@ public class TestTokenizer extends BasicTestCase {
         final String SQL_2 =
                 "SELECT 10/2 / * this must fail */";
 
-        failureTest(SQL_2, "Tokenized not-comment as a multiline-comment.");
+        failureTest(SQL_2, "Tokenized not-comment as a multiline-comment.", "Syntax error");
 
         final String SQL_3 =
-                "SELECT 10/2 /* this must fail ";
+                "SELECT 10/2 /* this must fail";
 
         failureTest(SQL_3,
                 "Uncomplete end multiline comment not recognized.",
@@ -141,21 +153,9 @@ public class TestTokenizer extends BasicTestCase {
     }
 
     private void successTest(String sql) throws SQLException {
-//		out.println(SQL_1);
-
         ResultSet rs_1 = stat.executeQuery(sql);
         rs_1.next();
         rs_1.close();
-    }
-
-    private void failureTest(String sql, String failureMessage) {
-        try {
-            stat.executeQuery(sql);
-            fail(failureMessage);
-        } catch (SQLException e) {
-            // just to check the error, if it happens, is the expected one
-            out.println("REGULAR: " + e.getMessage() + '\n');
-        }
     }
 
     private void failureTest(String sql, String failureMessage, String expected) {
@@ -168,16 +168,14 @@ public class TestTokenizer extends BasicTestCase {
                     "Unexpected error: [{0}], expected: [{1}]",
                     new Object[]{foundMsg, expected});
 
-            assertTrue(assertMsg, foundMsg.indexOf(expected) > -1);
+            assertTrue(assertMsg, foundMsg.contains(expected));
 
             // just to check the error, if it happens, is the expected one
             out.println("REGULAR: " + e.getMessage() + '\n');
         }
     }
-    //////////////////////////////////////////////////////////////////////
-    // THE FOLLOWING TESTS NEED PACKAGE ACCESS, SO THEY ARE DISABLED.
-    //////////////////////////////////////////////////////////////////////
 
+    @Test
     public void testCommentsInside() throws SQLException {
         List parsedTokens;
         char[] sourceSQL;

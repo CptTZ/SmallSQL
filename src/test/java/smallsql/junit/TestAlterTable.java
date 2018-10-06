@@ -3,6 +3,8 @@
  */
 package smallsql.junit;
 
+import smallsql.basicTestFrame;
+
 import java.sql.*;
 
 import static smallsql.junit.JunitTestExtended.*;
@@ -19,7 +21,7 @@ public class TestAlterTable extends BasicTestCase {
     public void setUp() {
         tearDown();
         try {
-            Connection con = AllTests.getConnection();
+            Connection con = basicTestFrame.getConnection();
             Statement st = con.createStatement();
             st.execute("create table " + table + "(i int, v varchar(100))");
             st.execute("Insert into " + table + " Values(1,'abc')");
@@ -40,7 +42,7 @@ public class TestAlterTable extends BasicTestCase {
 
     public void tearDown() {
         try {
-            dropTable(AllTests.getConnection(), table);
+            dropTable(basicTestFrame.getConnection(), table);
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
@@ -48,7 +50,7 @@ public class TestAlterTable extends BasicTestCase {
 
 
     public void testAdd1Column() throws Exception {
-        Connection con = AllTests.getConnection();
+        Connection con = basicTestFrame.getConnection();
         Statement st = con.createStatement();
         st.execute("Alter Table " + table + " Add a Varchar(20)");
         ResultSet rs = st.executeQuery("Select * From " + table);
@@ -57,7 +59,7 @@ public class TestAlterTable extends BasicTestCase {
 
 
     public void testAdd2Column() throws Exception {
-        Connection con = AllTests.getConnection();
+        Connection con = basicTestFrame.getConnection();
         Statement st = con.createStatement();
         st.execute("Alter Table " + table + " Add a Varchar(20), b int DEFAULT 25");
         ResultSet rs = st.executeQuery("Select * From " + table);
@@ -72,7 +74,7 @@ public class TestAlterTable extends BasicTestCase {
 
 
     public void testAddWithTableLock_REPEATABLE_READ() throws Exception {
-        Connection con = AllTests.getConnection();
+        Connection con = basicTestFrame.getConnection();
         Statement st = con.createStatement();
         int isolation = con.getTransactionIsolation();
         con.setAutoCommit(false);
@@ -95,7 +97,7 @@ public class TestAlterTable extends BasicTestCase {
 
 
     public void testAddWithTableLock_READ_COMMITTED() throws Exception {
-        Connection con = AllTests.getConnection();
+        Connection con = basicTestFrame.getConnection();
         Statement st = con.createStatement();
         int isolation = con.getTransactionIsolation();
         con.setAutoCommit(false);

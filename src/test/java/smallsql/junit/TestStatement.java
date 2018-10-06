@@ -33,6 +33,8 @@
  */
 package smallsql.junit;
 
+import smallsql.basicTestFrame;
+
 import java.sql.*;
 
 import static smallsql.junit.JunitTestExtended.*;
@@ -47,7 +49,7 @@ public class TestStatement extends BasicTestCase {
 
     protected void setUp() throws Exception {
         if (init) return;
-        Connection con = AllTests.getConnection();
+        Connection con = basicTestFrame.getConnection();
         Statement st = con.createStatement();
         dropTable(con, "statement");
         st.execute("Create Table statement (c varchar(30), i counter)");
@@ -56,7 +58,7 @@ public class TestStatement extends BasicTestCase {
 
 
     public void testBatchUpate() throws Exception {
-        Connection con = AllTests.getConnection();
+        Connection con = basicTestFrame.getConnection();
         Statement st = con.createStatement();
 
         assertEquals("Result Length wrong", 0, st.executeBatch().length);
@@ -82,14 +84,14 @@ public class TestStatement extends BasicTestCase {
 
 
     public void testMultiValues() throws Exception {
-        Connection con = AllTests.getConnection();
+        Connection con = basicTestFrame.getConnection();
         Statement st = con.createStatement();
         assertEquals("Update Count:", 10, st.executeUpdate("Insert Into statement(c) Values('abc1'),('abc2'),('abc3'),('abc4'),('abc5'),('abc6'),('abc7'),('abc8'),('abc9'),('abc10')"));
     }
 
 
     public void testMaxRows() throws Exception {
-        Connection con = AllTests.getConnection();
+        Connection con = basicTestFrame.getConnection();
         Statement st = con.createStatement();
         st.setMaxRows(5);
         ResultSet rs = st.executeQuery("Select * From statement");
@@ -121,7 +123,7 @@ public class TestStatement extends BasicTestCase {
 
 
     public void testMoreResults() throws Exception {
-        Connection con = AllTests.getConnection();
+        Connection con = basicTestFrame.getConnection();
         Statement st = con.createStatement();
 
         ResultSet rs = st.executeQuery("Select * From statement");
@@ -158,7 +160,7 @@ public class TestStatement extends BasicTestCase {
 
 
     public void testGetConnection() throws Exception {
-        Connection con = AllTests.getConnection();
+        Connection con = basicTestFrame.getConnection();
         Statement st = con.createStatement();
 
         assertEquals(con, st.getConnection());
@@ -166,7 +168,7 @@ public class TestStatement extends BasicTestCase {
 
 
     public void testFetch() throws Exception {
-        Connection con = AllTests.getConnection();
+        Connection con = basicTestFrame.getConnection();
         Statement st = con.createStatement();
 
         st.setFetchDirection(ResultSet.FETCH_FORWARD);
@@ -181,7 +183,7 @@ public class TestStatement extends BasicTestCase {
 
 
     public void testGeneratedKeys() throws Exception {
-        Connection con = AllTests.getConnection();
+        Connection con = basicTestFrame.getConnection();
         Statement st = con.createStatement();
         ResultSet rs;
 
@@ -241,7 +243,7 @@ public class TestStatement extends BasicTestCase {
 
 
     public void testGeneratedKeysWithPrepare() throws Exception {
-        Connection con = AllTests.getConnection();
+        Connection con = basicTestFrame.getConnection();
         ResultSet rs;
 
         PreparedStatement pr = con.prepareStatement("Insert Into statement(c) Values('key1')", Statement.NO_GENERATED_KEYS);
@@ -305,7 +307,7 @@ public class TestStatement extends BasicTestCase {
 
 
     public void testResultSetType() throws Exception {
-        Connection con = AllTests.getConnection();
+        Connection con = basicTestFrame.getConnection();
         Statement st = con.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
 
         assertEquals(ResultSet.TYPE_SCROLL_SENSITIVE, st.getResultSetType());
@@ -320,7 +322,7 @@ public class TestStatement extends BasicTestCase {
 
     public void testOther() throws Exception {
         //now we test all not implemented code
-        Connection con = AllTests.getConnection();
+        Connection con = basicTestFrame.getConnection();
         Statement st = con.createStatement();
 
         //curently there are no known warnings
@@ -338,7 +340,7 @@ public class TestStatement extends BasicTestCase {
 
 
     public void testTruncate() throws Exception {
-        Connection con = AllTests.getConnection();
+        Connection con = basicTestFrame.getConnection();
         Statement st = con.createStatement();
 
         st.execute("Truncate table statement");

@@ -32,6 +32,8 @@
  */
 package smallsql.junit;
 
+import smallsql.basicTestFrame;
+
 import java.sql.*;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
@@ -55,17 +57,17 @@ public class TestDBMetaData extends BasicTestCase {
 
 
     public void testGetURL() throws Exception {
-        Connection con = AllTests.getConnection();
+        Connection con = basicTestFrame.getConnection();
         DatabaseMetaData md = con.getMetaData();
-        assertEquals(AllTests.JDBC_URL, md.getURL());
+        assertEquals(basicTestFrame.JDBC_URL, md.getURL());
     }
 
 
     public void testVersions() throws Exception {
-        Connection con = AllTests.getConnection();
+        Connection con = basicTestFrame.getConnection();
         DatabaseMetaData md = con.getMetaData();
         assertEquals(md.getDriverVersion(), md.getDatabaseProductVersion());
-        Driver driver = DriverManager.getDriver(AllTests.JDBC_URL);
+        Driver driver = DriverManager.getDriver(basicTestFrame.JDBC_URL);
         assertEquals("MajorVersion", driver.getMajorVersion(), md.getDatabaseMajorVersion());
         assertEquals("MajorVersion", driver.getMajorVersion(), md.getDriverMajorVersion());
         assertEquals("MinorVersion", driver.getMinorVersion(), md.getDatabaseMinorVersion());
@@ -76,7 +78,7 @@ public class TestDBMetaData extends BasicTestCase {
 
 
     public void testFunctions() throws Exception {
-        Connection con = AllTests.getConnection();
+        Connection con = basicTestFrame.getConnection();
         DatabaseMetaData md = con.getMetaData();
         assertEquals("ABS,ACOS,ASIN,ATAN,ATAN2,CEILING,COS,COT,DEGREES,EXP,FLOOR,LOG,LOG10,MOD,PI,POWER,RADIANS,RAND,ROUND,SIGN,SIN,SQRT,TAN,TRUNCATE",
                 md.getNumericFunctions());
@@ -90,7 +92,7 @@ public class TestDBMetaData extends BasicTestCase {
 
 
     public void testGetProcedures() throws Exception {
-        Connection con = AllTests.getConnection();
+        Connection con = basicTestFrame.getConnection();
         DatabaseMetaData md = con.getMetaData();
         ResultSet rs = md.getProcedures(null, null, "*");
         String[] colNames = {"PROCEDURE_CAT", "PROCEDURE_SCHEM", "PROCEDURE_NAME", "", "", "", "REMARKS", "PROCEDURE_TYPE"};
@@ -100,7 +102,7 @@ public class TestDBMetaData extends BasicTestCase {
 
 
     public void testGetProcedureColumns() throws Exception {
-        Connection con = AllTests.getConnection();
+        Connection con = basicTestFrame.getConnection();
         DatabaseMetaData md = con.getMetaData();
         ResultSet rs = md.getProcedureColumns(null, null, "*", null);
         String[] colNames = {"PROCEDURE_CAT", "PROCEDURE_SCHEM", "PROCEDURE_NAME", "COLUMN_NAME", "COLUMN_TYPE", "DATA_TYPE", "TYPE_NAME", "PRECISION", "LENGTH", "SCALE", "RADIX", "NULLABLE", "REMARKS"};
@@ -122,7 +124,7 @@ public class TestDBMetaData extends BasicTestCase {
         con.close();
 
         //Then test it with a database
-        con = AllTests.getConnection();
+        con = basicTestFrame.getConnection();
         md = con.getMetaData();
         rs = md.getTables(null, null, null, null);
         super.assertRSMetaData(rs, colNames, types);
@@ -130,7 +132,7 @@ public class TestDBMetaData extends BasicTestCase {
 
 
     public void testGetSchemas() throws Exception {
-        Connection con = AllTests.getConnection();
+        Connection con = basicTestFrame.getConnection();
         DatabaseMetaData md = con.getMetaData();
         ResultSet rs = md.getSchemas();
         String[] colNames = {"TABLE_SCHEM"};
@@ -141,7 +143,7 @@ public class TestDBMetaData extends BasicTestCase {
 
 
     public void testGetCatalogs() throws Exception {
-        Connection con = AllTests.getConnection();
+        Connection con = basicTestFrame.getConnection();
         try {
             con.createStatement().execute("drop database test2\n\r\t");
         } catch (SQLException e) {/* ignore it if the database already exists */}
@@ -156,7 +158,7 @@ public class TestDBMetaData extends BasicTestCase {
 
 
     public void testGetTableTypes() throws Exception {
-        Connection con = AllTests.getConnection();
+        Connection con = basicTestFrame.getConnection();
         DatabaseMetaData md = con.getMetaData();
         ResultSet rs = md.getTableTypes();
         String[] colNames = {"TABLE_TYPE"};
@@ -175,7 +177,7 @@ public class TestDBMetaData extends BasicTestCase {
 
 
     public void testGetColumn() throws Exception {
-        Connection con = AllTests.getConnection();
+        Connection con = basicTestFrame.getConnection();
         dropTable(con, "tableColumns");
         dropView(con, "viewColumns");
         con.createStatement().execute("create table tableColumns(a int default 5)");
@@ -205,7 +207,7 @@ public class TestDBMetaData extends BasicTestCase {
 
 
     public void testGetTypeInfo() throws Exception {
-        Connection con = AllTests.getConnection();
+        Connection con = basicTestFrame.getConnection();
         DatabaseMetaData md = con.getMetaData();
 
         ResultSet rs = md.getTypeInfo();
@@ -225,7 +227,7 @@ public class TestDBMetaData extends BasicTestCase {
 
 
     public void testGetCrossReference() throws Exception {
-        Connection con = AllTests.getConnection();
+        Connection con = basicTestFrame.getConnection();
         dropTable(con, "tblCross1");
         dropTable(con, "tblCross2");
         DatabaseMetaData md = con.getMetaData();
@@ -258,7 +260,7 @@ public class TestDBMetaData extends BasicTestCase {
 
 
     public void testGetBestRowIdentifier() throws Exception {
-        Connection con = AllTests.getConnection();
+        Connection con = basicTestFrame.getConnection();
         dropTable(con, "tblBestRow1");
         DatabaseMetaData md = con.getMetaData();
         Statement st = con.createStatement();
@@ -293,7 +295,7 @@ public class TestDBMetaData extends BasicTestCase {
 
 
     public void testGetgetUDTs() throws Exception {
-        Connection con = AllTests.getConnection();
+        Connection con = basicTestFrame.getConnection();
         DatabaseMetaData md = con.getMetaData();
         ResultSet rs = md.getUDTs(null, null, null, null);
         String[] colNames = {"TYPE_CAT", "TYPE_SCHEM", "TYPE_NAME", "CLASS_NAME", "DATA_TYPE", "REMARKS"};
@@ -304,7 +306,7 @@ public class TestDBMetaData extends BasicTestCase {
 
 
     public void testGetConnection() throws Exception {
-        Connection con = AllTests.getConnection();
+        Connection con = basicTestFrame.getConnection();
         DatabaseMetaData md = con.getMetaData();
         assertEquals(con, md.getConnection());
     }

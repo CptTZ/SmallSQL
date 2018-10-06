@@ -32,6 +32,8 @@
  */
 package smallsql.junit;
 
+import smallsql.basicTestFrame;
+
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
@@ -59,7 +61,7 @@ public class TestDeleteUpdate extends BasicTestCase {
 
 
     public void testDelete() throws Exception {
-        Connection con = AllTests.getConnection();
+        Connection con = basicTestFrame.getConnection();
         dropTable(con, "testDelete");
         Statement st = con.createStatement();
         st.execute("create table testDelete(a int default 15)");
@@ -80,7 +82,7 @@ public class TestDeleteUpdate extends BasicTestCase {
     }
 
     public void testUpdate1() throws Exception {
-        Connection con = AllTests.getConnection();
+        Connection con = basicTestFrame.getConnection();
         dropTable(con, "testUpdate");
         Statement st = con.createStatement();
         st.execute("create table testUpdate(id int default 15, value int)");
@@ -111,7 +113,7 @@ public class TestDeleteUpdate extends BasicTestCase {
     }
 
     public void testUpdate2() throws Exception {
-        Connection con = AllTests.getConnection();
+        Connection con = basicTestFrame.getConnection();
         dropTable(con, "testUpdate");
         Statement st = con.createStatement();
         st.execute("create table testUpdate(id int default 15, value1 varchar(100), value2 int)");
@@ -144,7 +146,7 @@ public class TestDeleteUpdate extends BasicTestCase {
 
 
     public void testUpdateMultiTables() throws Exception {
-        Connection con = AllTests.getConnection();
+        Connection con = basicTestFrame.getConnection();
         dropTable(con, "testUpdate1");
         dropTable(con, "testUpdate2");
         Statement st = con.createStatement();

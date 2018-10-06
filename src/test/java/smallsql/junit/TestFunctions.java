@@ -32,6 +32,8 @@
  */
 package smallsql.junit;
 
+import smallsql.basicTestFrame;
+
 import java.math.BigDecimal;
 import java.sql.*;
 
@@ -371,7 +373,7 @@ public class TestFunctions extends BasicTestCase {
 
     public void tearDown() {
         try {
-            Connection con = AllTests.getConnection();
+            Connection con = basicTestFrame.getConnection();
             Statement st = con.createStatement();
             st.execute("drop table " + table);
             st.close();
@@ -383,7 +385,7 @@ public class TestFunctions extends BasicTestCase {
     public void setUp() {
         tearDown();
         try {
-            Connection con = AllTests.getConnection();
+            Connection con = basicTestFrame.getConnection();
             Statement st = con.createStatement();
             st.execute("create table " + table + "(aInt int, aVarchar varchar(100))");
             st.execute("Insert into " + table + "(aInt, aVarchar) Values(-120,'qwert')");

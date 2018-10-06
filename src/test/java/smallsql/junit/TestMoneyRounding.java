@@ -32,6 +32,7 @@
  */
 package smallsql.junit;
 
+import smallsql.basicTestFrame;
 import smallsql.database.Money;
 
 import java.math.BigDecimal;
@@ -48,14 +49,14 @@ public class TestMoneyRounding {
 
     public void setUp() throws SQLException {
         tearDown();
-        Connection con = AllTests.getConnection();
+        Connection con = basicTestFrame.getConnection();
         Statement st = con.createStatement();
         st.execute("create table " + table + "(a money, b smallmoney)");
     }
 
     public void tearDown() {
         try {
-            Connection con = AllTests.getConnection();
+            Connection con = basicTestFrame.getConnection();
             Statement st = con.createStatement();
             st.execute("drop table " + table);
             st.close();
@@ -65,7 +66,7 @@ public class TestMoneyRounding {
     }
 
     public void testMoney1() throws Exception {
-        Connection con = AllTests.getConnection();
+        Connection con = basicTestFrame.getConnection();
         Statement st = con.createStatement();
         int firstValue = -10000;
         for (int i = firstValue; i < 10000; i++) {
@@ -77,7 +78,7 @@ public class TestMoneyRounding {
 
 
     private void verify(int firstValue) throws Exception {
-        Connection con = AllTests.getConnection();
+        Connection con = basicTestFrame.getConnection();
         Statement st = con.createStatement();
         ResultSet rs = st.executeQuery("Select * FROM " + table);
         long i = firstValue;
@@ -102,7 +103,7 @@ public class TestMoneyRounding {
 
 
     public void testMoney2() throws Exception {
-        Connection con = AllTests.getConnection();
+        Connection con = basicTestFrame.getConnection();
         Statement st = con.createStatement();
         int firstValue = -10000;
         for (int i = firstValue; i < 10000; i++) {

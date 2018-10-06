@@ -32,6 +32,7 @@
  */
 package smallsql.junit;
 
+import smallsql.basicTestFrame;
 import smallsql.tools.language.Language;
 
 import java.sql.Connection;
@@ -61,7 +62,7 @@ public class TestLanguage extends BasicTestCase {
 
     public void tearDown() throws SQLException {
         // restore language
-        Connection conn = AllTests.createConnection("?locale=en", null);
+        Connection conn = basicTestFrame.createConnection("?locale=en", null);
 
         try {
             conn.prepareStatement("DROP TABLE " + TABLE_NAME).execute();
@@ -79,7 +80,7 @@ public class TestLanguage extends BasicTestCase {
         Locale origLocale = Locale.getDefault();
         Locale.setDefault(Locale.ITALY);
 
-        Connection conn = AllTests.createConnection("?locale=XXX", null);
+        Connection conn = basicTestFrame.createConnection("?locale=XXX", null);
         Statement stat = conn.createStatement();
 
         try {
@@ -96,7 +97,7 @@ public class TestLanguage extends BasicTestCase {
     }
 
     public void testLocalizedErrors() throws Exception {
-        Connection conn = AllTests.createConnection("?locale=it", null);
+        Connection conn = basicTestFrame.createConnection("?locale=it", null);
         Statement stat = conn.createStatement();
 
         try {
@@ -127,7 +128,7 @@ public class TestLanguage extends BasicTestCase {
     }
 
     public void testSyntaxErrors() throws SQLException {
-        Connection conn = AllTests.createConnection("?locale=it", null);
+        Connection conn = basicTestFrame.createConnection("?locale=it", null);
         Statement stat = conn.createStatement();
 
         try {

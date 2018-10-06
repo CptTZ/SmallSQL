@@ -33,6 +33,8 @@
  */
 package smallsql.junit;
 
+import smallsql.basicTestFrame;
+
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
@@ -51,7 +53,7 @@ public class TestResultSet extends BasicTestCase {
 
     protected void setUp() throws Exception {
         if (init) return;
-        Connection con = AllTests.getConnection();
+        Connection con = basicTestFrame.getConnection();
         Statement st = con.createStatement();
         dropTable(con, "ResultSet");
         st.execute("Create Table ResultSet (i int identity, c varchar(30))");
@@ -68,7 +70,7 @@ public class TestResultSet extends BasicTestCase {
 
 
     public void testScrollStates() throws Exception {
-        Connection con = AllTests.getConnection();
+        Connection con = basicTestFrame.getConnection();
         Statement st = con.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
         ResultSet rs = st.executeQuery("Select * From ResultSet Where 1=0");
 
@@ -113,7 +115,7 @@ public class TestResultSet extends BasicTestCase {
 
 
     public void testScrollStatesGroupBy() throws Exception {
-        Connection con = AllTests.getConnection();
+        Connection con = basicTestFrame.getConnection();
         Statement st = con.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
         ResultSet rs = st.executeQuery("Select i,max(c) From ResultSet Group By i HAVING i=1");
 
@@ -156,7 +158,7 @@ public class TestResultSet extends BasicTestCase {
 
 
     public void testUpdate() throws Exception {
-        Connection con = AllTests.getConnection();
+        Connection con = basicTestFrame.getConnection();
         Statement st = con.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
         ResultSet rs;
 
@@ -193,7 +195,7 @@ public class TestResultSet extends BasicTestCase {
         final Object value = "UpdateAndScroll";
         Object value1;
         Object value2;
-        Connection con = AllTests.getConnection();
+        Connection con = basicTestFrame.getConnection();
         Statement st = con.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
         ResultSet rs = st.executeQuery("Select * From ResultSet");
 
@@ -252,7 +254,7 @@ public class TestResultSet extends BasicTestCase {
 
 
     public void testDelete() throws Exception {
-        Connection con = AllTests.getConnection();
+        Connection con = basicTestFrame.getConnection();
         Statement st = con.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
         ResultSet rs = st.executeQuery("Select * From ResultSet Where i>1");
 
@@ -264,7 +266,7 @@ public class TestResultSet extends BasicTestCase {
 
 
     public void testOther() throws Exception {
-        Connection con = AllTests.getConnection();
+        Connection con = basicTestFrame.getConnection();
         Statement st = con.createStatement();
         ResultSet rs = st.executeQuery("Select * From ResultSet");
 

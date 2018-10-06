@@ -203,7 +203,7 @@ class SmallSQLException extends SQLException {
 	 * @return translated message.
 	 */
 	static String translateMsg(String messageCode, Object[] params) {
-		assert ( messageCode != null && params != null ): "Fill parameters. msgCode=" + messageCode + " params=" + params;
+		assert (messageCode != null) : "Fill parameters. msgCode=" + messageCode + " params=" + (params == null ? "Undefined" : params);
 		
 		String localized = language.getMessage(messageCode);		
 		return MessageFormat.format(localized, params); 

@@ -12,7 +12,7 @@ import java.sql.*;
 import java.util.Properties;
 import java.util.Scanner;
 
-public class CommandLine {
+public class cli {
 
     public static void main(String... args) throws Exception {
         System.err.println(String.format("SmallSQL Database CLI <v%d.%d>%n", config.VERSION_NUMBER_MAJOR, config.VERSION_NUMBER_MINOR));

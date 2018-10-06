@@ -33,6 +33,8 @@
  */
 package smallsql.junit;
 
+import smallsql.basicTestFrame;
+
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -46,7 +48,7 @@ import static smallsql.junit.JunitTestExtended.*;
 public class TestScrollable extends BasicTestCase {
 
     public void testLastWithWhere() throws Exception {
-        Connection con = AllTests.getConnection();
+        Connection con = basicTestFrame.getConnection();
         try {
             con.createStatement().execute("Create Table Scrollable (i counter, v varchar(20))");
             assertRowCount(0, "Select * from Scrollable");
@@ -79,7 +81,7 @@ public class TestScrollable extends BasicTestCase {
 
 
     public void testNextWithWhere() throws Exception {
-        Connection con = AllTests.getConnection();
+        Connection con = basicTestFrame.getConnection();
         try {
             con.createStatement().execute("Create Table Scrollable (i counter, v varchar(20))");
             assertRowCount(0, "Select * from Scrollable");
@@ -111,7 +113,7 @@ public class TestScrollable extends BasicTestCase {
 
 
     public void testFirstWithWhere() throws Exception {
-        Connection con = AllTests.getConnection();
+        Connection con = basicTestFrame.getConnection();
         try {
             con.createStatement().execute("Create Table Scrollable (i counter, v varchar(20))");
             assertRowCount(0, "Select * from Scrollable");
@@ -147,7 +149,7 @@ public class TestScrollable extends BasicTestCase {
 
 
     public void testPreviousWithWhere() throws Exception {
-        Connection con = AllTests.getConnection();
+        Connection con = basicTestFrame.getConnection();
         try {
             con.createStatement().execute("Create Table Scrollable (i counter, v varchar(20))");
             assertRowCount(0, "Select * from Scrollable");
@@ -185,7 +187,7 @@ public class TestScrollable extends BasicTestCase {
 
 
     public void testAbsoluteRelative() throws Exception {
-        Connection con = AllTests.getConnection();
+        Connection con = basicTestFrame.getConnection();
         try {
             con.createStatement().execute("Create Table Scrollable (i counter, v varchar(20))");
             assertRowCount(0, "Select * from Scrollable");
@@ -274,7 +276,7 @@ public class TestScrollable extends BasicTestCase {
 
 
     public void testUpdatable() throws Exception {
-        Connection con = AllTests.getConnection();
+        Connection con = basicTestFrame.getConnection();
         try {
             con.createStatement().execute("Create Table Scrollable (i int Identity primary key, v varchar(20))");
             Statement st = con.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);

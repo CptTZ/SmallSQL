@@ -3,6 +3,8 @@
  */
 package smallsql.junit;
 
+import smallsql.basicTestFrame;
+
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
@@ -33,7 +35,7 @@ public class TestThreads extends BasicTestCase {
         final String sql = "Select * From table_OrderBy1";
 
         // calculate the row count of this table
-        final Connection con = AllTests.getConnection();
+        final Connection con = basicTestFrame.getConnection();
         Statement st = con.createStatement();
         ResultSet rs = st.executeQuery("Select * From table_OrderBy1");
         int count = 0;
@@ -80,7 +82,7 @@ public class TestThreads extends BasicTestCase {
     public void testConcurrentThreadWrite() throws Throwable {
         ArrayList threadList = new ArrayList();
         throwable = null;
-        final Connection con = AllTests.getConnection();
+        final Connection con = basicTestFrame.getConnection();
         Statement st = con.createStatement();
         try {
             st.execute("CREATE TABLE ConcurrentWrite( value int)");
@@ -131,7 +133,7 @@ public class TestThreads extends BasicTestCase {
     public void testConcurrentConnectionWrite() throws Throwable {
         ArrayList threadList = new ArrayList();
         throwable = null;
-        Connection con = AllTests.getConnection();
+        Connection con = basicTestFrame.getConnection();
         Statement st = con.createStatement();
         try {
             st.execute("CREATE TABLE ConcurrentWrite( value int)");
@@ -143,7 +145,7 @@ public class TestThreads extends BasicTestCase {
 
                     public void run() {
                         try {
-                            Connection con2 = AllTests.createConnection();
+                            Connection con2 = basicTestFrame.createConnection();
                             Statement st2 = con2.createStatement();
                             int count = st2.executeUpdate("UPDATE ConcurrentWrite SET value = value + 1");
                             assertEquals("Update Count", 1, count);

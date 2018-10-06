@@ -32,6 +32,8 @@
  */
 package smallsql.junit;
 
+import smallsql.basicTestFrame;
+
 import java.math.BigDecimal;
 import java.sql.*;
 
@@ -61,7 +63,7 @@ public class TestGroupBy extends BasicTestCase {
     public void init() {
         if (init) return;
         try {
-            Connection con = AllTests.getConnection();
+            Connection con = basicTestFrame.getConnection();
             dropTable(con, table1);
             Statement st = con.createStatement();
             st.execute("create table " + table1 + "(name varchar(30), id int )");
@@ -92,7 +94,7 @@ public class TestGroupBy extends BasicTestCase {
 
     public void testTest() throws Exception {
         init();
-        Connection con = AllTests.getConnection();
+        Connection con = basicTestFrame.getConnection();
         Statement st = con.createStatement();
         ResultSet rs;
 		/*
@@ -131,7 +133,7 @@ public class TestGroupBy extends BasicTestCase {
 
     public void testCountWherePrepare() throws Exception {
         init();
-        Connection con = AllTests.getConnection();
+        Connection con = basicTestFrame.getConnection();
         PreparedStatement pr = con.prepareStatement("Select count(*) FROM " + table1 + " Where id=-1234");
         for (int i = 1; i <= 3; i++) {
             ResultSet rs = pr.executeQuery();
@@ -142,7 +144,7 @@ public class TestGroupBy extends BasicTestCase {
 
     public void testCountOrderBy() throws Exception {
         init();
-        Connection con = AllTests.getConnection();
+        Connection con = basicTestFrame.getConnection();
         PreparedStatement pr = con.prepareStatement("Select count(*) FROM " + table1 + " Group By name Order By name DESC");
         for (int i = 1; i <= 3; i++) {
             ResultSet rs = pr.executeQuery();
@@ -155,7 +157,7 @@ public class TestGroupBy extends BasicTestCase {
 
     public void testGroupByWithExpression() throws Exception {
         init();
-        Connection con = AllTests.getConnection();
+        Connection con = basicTestFrame.getConnection();
         PreparedStatement pr = con.prepareStatement("Select sum(id), name+'a' as ColumnName FROM " + table1 + " Group By name+'a' Order By Name+'a'");
         for (int i = 1; i <= 3; i++) {
             ResultSet rs = pr.executeQuery();
@@ -169,7 +171,7 @@ public class TestGroupBy extends BasicTestCase {
 
     public void testComplex() throws Exception {
         init();
-        Connection con = AllTests.getConnection();
+        Connection con = basicTestFrame.getConnection();
         PreparedStatement pr = con.prepareStatement("Select abs(sum(abs(3-id))+2) FROM " + table1 + " Group By name+'a' Order By 'b'+(Name+'a')");
         for (int i = 1; i <= 3; i++) {
             ResultSet rs = pr.executeQuery();
@@ -333,7 +335,7 @@ public class TestGroupBy extends BasicTestCase {
 
     public void testGroupBy() throws Exception {
         init();
-        Connection con = AllTests.getConnection();
+        Connection con = basicTestFrame.getConnection();
         Statement st = con.createStatement();
         ResultSet rs;
         rs = st.executeQuery("Select name FROM " + table1 + " Group By name");
@@ -352,7 +354,7 @@ public class TestGroupBy extends BasicTestCase {
      */
     public void testViewWidthGroupBy() throws Exception {
         init();
-        Connection con = AllTests.getConnection();
+        Connection con = basicTestFrame.getConnection();
         Statement st = con.createStatement();
         try {
             ResultSet rs;
@@ -371,7 +373,7 @@ public class TestGroupBy extends BasicTestCase {
         init();
 
         // test count(*) without any row
-        Connection con = AllTests.getConnection();
+        Connection con = basicTestFrame.getConnection();
         Statement st = con.createStatement();
         st.execute("Delete FROM " + table1);
         init = false;

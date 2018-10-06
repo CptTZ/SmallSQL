@@ -3,6 +3,8 @@
  */
 package smallsql.junit;
 
+import smallsql.basicTestFrame;
+
 import java.sql.*;
 
 import static org.junit.jupiter.api.Assertions.fail;
@@ -21,7 +23,7 @@ public class TestAlterTable2 extends BasicTestCase {
 
     public void tearDown() {
         try {
-            dropTable(AllTests.getConnection(), table);
+            dropTable(basicTestFrame.getConnection(), table);
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
@@ -29,7 +31,7 @@ public class TestAlterTable2 extends BasicTestCase {
 
 
     public void testWithPrimaryKey() throws Exception {
-        Connection con = AllTests.getConnection();
+        Connection con = basicTestFrame.getConnection();
         Statement st = con.createStatement();
         st.execute("create table " + table + " (keyField varchar(2) primary key)");
         st.execute("alter table " + table + " add anotherField varchar(4)");
@@ -41,7 +43,7 @@ public class TestAlterTable2 extends BasicTestCase {
 
 
     public void testAddPrimaryKey() throws Exception {
-        Connection con = AllTests.getConnection();
+        Connection con = basicTestFrame.getConnection();
         Statement st = con.createStatement();
         st.execute("create table " + table + " (a varchar(2))");
         st.execute("alter table " + table + " add b varchar(4) primary key");
@@ -53,7 +55,7 @@ public class TestAlterTable2 extends BasicTestCase {
 
 
     public void testAdd2PrimaryKeys() throws Exception {
-        Connection con = AllTests.getConnection();
+        Connection con = basicTestFrame.getConnection();
         Statement st = con.createStatement();
         st.execute("create table " + table + " (a varchar(2) primary key)");
 
@@ -71,7 +73,7 @@ public class TestAlterTable2 extends BasicTestCase {
 
 
     public void testAdd2Keys() throws Exception {
-        Connection con = AllTests.getConnection();
+        Connection con = basicTestFrame.getConnection();
         Statement st = con.createStatement();
         st.execute("create table " + table + " (a varchar(2) unique)");
         st.execute("alter table " + table + " add b varchar(4) primary key");

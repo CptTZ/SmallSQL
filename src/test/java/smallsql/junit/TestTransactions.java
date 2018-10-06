@@ -33,6 +33,8 @@
  */
 package smallsql.junit;
 
+import smallsql.basicTestFrame;
+
 import java.sql.*;
 
 import static smallsql.junit.JunitTestExtended.*;
@@ -44,8 +46,8 @@ public class TestTransactions extends BasicTestCase {
 
 
     public void testCreateTable() throws Exception {
-        Connection con = AllTests.getConnection();
-        Connection con2 = AllTests.createConnection();
+        Connection con = basicTestFrame.getConnection();
+        Connection con2 = basicTestFrame.createConnection();
         try {
             con.setAutoCommit(false);
             con.createStatement().execute("create table transactions (ID  INTEGER NOT NULL, Name VARCHAR(100), FirstName VARCHAR(100), Points INTEGER, LicenseID INTEGER, PRIMARY KEY(ID))");
@@ -80,7 +82,7 @@ public class TestTransactions extends BasicTestCase {
 
 
     public void testCommit() throws Exception {
-        Connection con = AllTests.getConnection();
+        Connection con = basicTestFrame.getConnection();
         try {
             con.setAutoCommit(false);
             con.createStatement().execute("Create Table transactions (i int identity, v varchar(20))");
@@ -113,7 +115,7 @@ public class TestTransactions extends BasicTestCase {
      * In the table there is already one row that is committed.
      */
     public void testCommitWithOneCommitRow() throws Exception {
-        Connection con = AllTests.getConnection();
+        Connection con = basicTestFrame.getConnection();
         try {
             con.createStatement().execute("Create Table transactions (i int identity, v varchar(20))");
             assertRowCount(0, "Select * from transactions");
@@ -143,7 +145,7 @@ public class TestTransactions extends BasicTestCase {
 
 
     public void testRollback() throws Exception {
-        Connection con = AllTests.getConnection();
+        Connection con = basicTestFrame.getConnection();
         try {
             con.createStatement().execute("Create Table transactions (i int identity, v varchar(20))");
             con.setAutoCommit(false);
@@ -176,7 +178,7 @@ public class TestTransactions extends BasicTestCase {
      * In the table there is already one row that is commited.
      */
     public void testRollbackWithOneCommitRow() throws Exception {
-        Connection con = AllTests.getConnection();
+        Connection con = basicTestFrame.getConnection();
         try {
             con.createStatement().execute("Create Table transactions (i int identity, v varchar(20))");
             assertRowCount(0, "Select * from transactions");
@@ -242,7 +244,7 @@ public class TestTransactions extends BasicTestCase {
 
 
     public void testInsertRow_Last() throws Exception {
-        Connection con = AllTests.getConnection();
+        Connection con = basicTestFrame.getConnection();
         testInsertRow_Last(con, false);
         testInsertRow_Last(con, true);
         con.setAutoCommit(false);
@@ -261,7 +263,7 @@ public class TestTransactions extends BasicTestCase {
      * @throws Exception if an error occur
      */
     public void testInsertAndUpdate() throws Exception {
-        Connection con = AllTests.getConnection();
+        Connection con = basicTestFrame.getConnection();
         try {
             con.setAutoCommit(false);
             con.createStatement().execute("Create Table transactions ( v varchar(20))");
@@ -305,7 +307,7 @@ public class TestTransactions extends BasicTestCase {
      * The difference to testInsertAndUpdate() is that the row was not inserted in the same transaction
      */
     public void testUpdateAndSavepoint() throws Exception {
-        Connection con = AllTests.getConnection();
+        Connection con = basicTestFrame.getConnection();
         try {
             con.createStatement().execute("Create Table transactions ( v varchar(20))");
             assertRowCount(0, "Select * from transactions");
@@ -357,7 +359,7 @@ public class TestTransactions extends BasicTestCase {
      * @throws Exception
      */
     public void testInsertRow_withWrongWhere() throws Exception {
-        Connection con = AllTests.getConnection();
+        Connection con = basicTestFrame.getConnection();
         try {
             con.setAutoCommit(false);
             con.createStatement().execute("Create Table transactions (i int identity, v varchar(20))");
@@ -391,7 +393,7 @@ public class TestTransactions extends BasicTestCase {
      * A row that was inserted and committed with a valid WHERE expression should not count 2 times.
      */
     public void testInsertRow_withRightWhere() throws Exception {
-        Connection con = AllTests.getConnection();
+        Connection con = basicTestFrame.getConnection();
         try {
             con.createStatement().execute("Create Table transactions (i int identity, v varchar(20))");
             assertRowCount(0, "Select * from transactions");
@@ -420,8 +422,8 @@ public class TestTransactions extends BasicTestCase {
 
 
     public void testReadUncommited() throws Exception {
-        Connection con1 = AllTests.getConnection();
-        Connection con2 = AllTests.createConnection();
+        Connection con1 = basicTestFrame.getConnection();
+        Connection con2 = basicTestFrame.createConnection();
         try {
             con2.setTransactionIsolation(Connection.TRANSACTION_READ_UNCOMMITTED);
             con1.createStatement().execute("Create Table transactions (i int identity, v varchar(20))");
@@ -442,8 +444,8 @@ public class TestTransactions extends BasicTestCase {
 
 
     public void testReadCommited() throws Exception {
-        Connection con1 = AllTests.getConnection();
-        Connection con2 = AllTests.createConnection();
+        Connection con1 = basicTestFrame.getConnection();
+        Connection con2 = basicTestFrame.createConnection();
         try {
             con2.setTransactionIsolation(Connection.TRANSACTION_READ_COMMITTED);
             con1.createStatement().execute("Create Table transactions (i int identity, v varchar(20))");
@@ -464,8 +466,8 @@ public class TestTransactions extends BasicTestCase {
 
 
     public void testReadSerialized() throws Exception {
-        Connection con1 = AllTests.getConnection();
-        Connection con2 = AllTests.createConnection();
+        Connection con1 = basicTestFrame.getConnection();
+        Connection con2 = basicTestFrame.createConnection();
         try {
             con1.createStatement().execute("Create Table transactions (i int identity, v varchar(20))");
             assertRowCount(0, "Select * from transactions");
@@ -499,8 +501,8 @@ public class TestTransactions extends BasicTestCase {
 
 
     public void testReadWriteLock() throws Exception {
-        Connection con1 = AllTests.getConnection();
-        Connection con2 = AllTests.createConnection();
+        Connection con1 = basicTestFrame.getConnection();
+        Connection con2 = basicTestFrame.createConnection();
         try {
             con1.createStatement().execute("Create Table transactions (i int identity, v varchar(20))");
             con1.createStatement().execute("Insert Into transactions(v) Values('qwert1')");

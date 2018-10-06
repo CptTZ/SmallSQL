@@ -30,7 +30,7 @@
  * Author: Volker Berlin
  *
  */
-package smallsql.junit;
+package smallsql;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -38,12 +38,14 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Properties;
 
-public class AllTests {
+/**
+ * Basic test frame that contains creating new connection
+ */
+public class basicTestFrame {
 
-    final static String CATALOG = "AllTests";
-    final static String JDBC_URL = "jdbc:smallsql:" + CATALOG;
+    public final static String CATALOG = "db1";
+    public final static String JDBC_URL = "jdbc:smallsql:" + CATALOG;
     private static Connection con;
-
 
     public static Connection getConnection() throws SQLException {
         if (con == null || con.isClosed()) {
@@ -71,9 +73,7 @@ public class AllTests {
      * @param info        object Properties; nullable.
      * @return connection created.
      */
-    public static Connection createConnection(String urlAddition,
-                                              Properties info)
-            throws SQLException {
+    public static Connection createConnection(String urlAddition, Properties info) throws SQLException {
         new smallsql.database.SSDriver();
 
         if (urlAddition == null) urlAddition = "";

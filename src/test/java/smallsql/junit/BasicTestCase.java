@@ -32,6 +32,8 @@
  */
 package smallsql.junit;
 
+import smallsql.basicTestFrame;
+
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.math.BigDecimal;
@@ -157,7 +159,7 @@ public class BasicTestCase {
 
 
     void assertRowCount(int sollCount, String sql) throws Exception {
-        Connection con = AllTests.getConnection();
+        Connection con = basicTestFrame.getConnection();
         Statement st = con.createStatement();
         ResultSet rs = st.executeQuery(sql);
         assertRowCount(sollCount, rs);
@@ -203,7 +205,7 @@ public class BasicTestCase {
      * Test a single Value of a the ResultSet that was produce from the SQL
      */
     void assertEqualsRsValue(Object obj, String sql) throws Exception {
-        Connection con = AllTests.getConnection();
+        Connection con = basicTestFrame.getConnection();
         Statement st = con.createStatement();
         ResultSet rs = st.executeQuery(sql);
         assertTrue("No row produce", rs.next());
@@ -344,7 +346,7 @@ public class BasicTestCase {
 
 
     void printSQL(String sql) throws SQLException {
-        Connection con = AllTests.getConnection();
+        Connection con = basicTestFrame.getConnection();
         Statement st = con.createStatement();
         ResultSet rs = st.executeQuery(sql);
         printRS(rs);
