@@ -3,6 +3,7 @@
  */
 package smallsql.tools;
 
+import csc468.WorkloadRecorder;
 import smallsql.database.SSDriver;
 
 import java.io.BufferedReader;
@@ -24,6 +25,7 @@ public class cli {
 
         Scanner sc = new Scanner(System.in);
         StringBuilder commandBuilder = new StringBuilder();
+        WorkloadRecorder workloadRecorder = WorkloadRecorder.getInstance();
 
         while (true) {
             if (commandBuilder.length() == 0) {
@@ -42,6 +44,7 @@ public class cli {
                     if (hasOutput) {
                         printRS(st.getResultSet());
                     }
+                    workloadRecorder.writeQueryToWorkload(prep);
                 } catch (SQLException e) {
                     System.err.println(e.getLocalizedMessage());
                 } finally {
@@ -54,6 +57,7 @@ public class cli {
             }
         }
         st.close();
+        workloadRecorder.closeWriter();
         System.err.println("Bye!");
     }
 

@@ -56,3 +56,6 @@ Temporary Items
 
 # DB file
 db1
+
+# CSC 468 Workload
+src/main/java/csc468/workload.txt
